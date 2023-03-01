@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Inter } from "next/font/google";
+import { getPositionValue } from "@/lib/Position";
 import styles from "@/styles/Position.module.css";
 import Switch from "./Switch";
 import TimeBox from "./TimeBox";
@@ -12,6 +13,7 @@ export default function Position() {
   const [entryPrice, setEntryPrice] = useState(0);
   const [stopLossPrice, setStopLossPrice] = useState(0);
   const [takeProfitPrice, setTakeProfitPrice] = useState(0);
+  const [collateral, setCollateral] = useState(0);
 
   return (
     <>
@@ -31,6 +33,16 @@ export default function Position() {
             value={takeProfitPrice}
             setValue={setTakeProfitPrice}
           />
+          <Price
+            label="Collateral"
+            value={collateral}
+            setValue={setCollateral}
+          />
+          <p className={inter.className}>
+            VALUE :{" "}
+            {collateral != 0 &&
+              getPositionValue(isLong, entryPrice, stopLossPrice, collateral)}
+          </p>
         </div>
       </section>
     </>
