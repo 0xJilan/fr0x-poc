@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Inter } from "next/font/google";
-import { getPositionValue } from "@/lib/Position";
+import { getPositionValue, getMaxProfit } from "@/lib/Position";
 import styles from "@/styles/Position.module.css";
 import Switch from "./Switch";
 import TimeBox from "./TimeBox";
@@ -14,6 +14,29 @@ export default function Position() {
   const [stopLossPrice, setStopLossPrice] = useState(0);
   const [takeProfitPrice, setTakeProfitPrice] = useState(0);
   const [collateral, setCollateral] = useState(0);
+  const [positionValue, setPositionValue] = useState(0);
+  const [maxProfit, setMaxProfit] = useState(0);
+
+  useEffect(() => {
+    const newValue = getPositionValue(
+      isLong,
+      Number(entryPrice),
+      Number(stopLossPrice),
+      Number(collateral)
+    );
+    setPositionValue(newValue);
+  }, [entryPrice, stopLossPrice, takeProfitPrice, collateral]);
+
+  useEffect(() => {
+    const newProfit = getMaxProfit(
+      isLong,
+      Number(positionValue),
+      Number(entryPrice),
+      Number(takeProfitPrice),
+      Number(collateral)
+    );
+    setMaxProfit(newProfit);
+  }, [positionValue]);
 
   return (
     <>
@@ -38,11 +61,8 @@ export default function Position() {
             value={collateral}
             setValue={setCollateral}
           />
-          <p className={inter.className}>
-            VALUE :{" "}
-            {collateral != 0 &&
-              getPositionValue(isLong, entryPrice, stopLossPrice, collateral)}
-          </p>
+          <p className={inter.className}>Position Value :{positionValue} $</p>
+          <p className={inter.className}>Max Profit :{maxProfit}</p>
         </div>
       </section>
     </>
