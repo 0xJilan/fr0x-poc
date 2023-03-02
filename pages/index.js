@@ -4,11 +4,24 @@ import styles from "@/styles/Home.module.css";
 import GlobalContext from "@/components/GlobalContext";
 import Simulation from "@/components/Simulation";
 import Position from "@/components/Position";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [page, setPage] = useState("POSITION");
+  const [totalAssetInThePool, setTotalAssetInThePool] = useState(1000000);
+  const [totalAssetBorrowed, setTotalAssetBorrowed] = useState(730000);
+  const [borrowedRatio, setBorrowedRatio] = useState(0);
+  const [borrowBaseRate, setBorrowBaseRate] = useState(0.015);
+  const [borrowPerSecondRate, setBorrowPerSecondRate] = useState(
+    (4.166 / 10 ** 8).toFixed(11)
+  );
+  const [executionBaseFee, setExecutionBaseFee] = useState(0.001);
+
+  useEffect(() => {
+    setBorrowedRatio(totalAssetBorrowed / totalAssetInThePool);
+  }, [totalAssetInThePool, totalAssetBorrowed]);
+
   return (
     <>
       <Head>
@@ -17,7 +30,20 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GlobalContext />
+      <GlobalContext
+        totalAssetInThePool={totalAssetInThePool}
+        setTotalAssetInThePool={setTotalAssetInThePool}
+        totalAssetBorrowed={totalAssetBorrowed}
+        setTotalAssetBorrowed={setTotalAssetBorrowed}
+        borrowedRatio={borrowedRatio}
+        setBorrowedRatio={setBorrowedRatio}
+        borrowBaseRate={borrowBaseRate}
+        setBorrowBaseRate={setBorrowBaseRate}
+        borrowPerSecondRate={borrowPerSecondRate}
+        setBorrowPerSecondRate={setBorrowPerSecondRate}
+        executionBaseFee={executionBaseFee}
+        setExecutionBaseFee={setExecutionBaseFee}
+      />
       <main className={styles.main}>
         <h1 className={inter.className}>Fr0x Proof Of Concept</h1>
         <div className={styles.buttonWrapper}>
@@ -34,7 +60,14 @@ export default function Home() {
             SIMULATION
           </div>
         </div>
-        {page === "POSITION" && <Position />}
+        {page === "POSITION" && (
+          <Position
+            borrowedRatio={borrowedRatio}
+            borrowBaseRate={borrowBaseRate}
+            borrowPerSecondRate={borrowPerSecondRate}
+            executionBaseFee={executionBaseFee}
+          />
+        )}
         {page === "SIMULATION" && <Simulation />}
       </main>
     </>

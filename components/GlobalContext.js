@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/GlobalContext.module.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -17,19 +16,19 @@ const Edit = ({ label, value, setValue }) => {
   );
 };
 
-export default function GlobalContext() {
-  const [totalAssetInThePool, setTotalAssetInThePool] = useState(1000000);
-  const [totalAssetBorrowed, setTotalAssetBorrowed] = useState(730000);
-  const [borrowedRatio, setBorrowedRatio] = useState(0);
-  const [borrowBaseRate, setBorrowBaseRate] = useState(0.015);
-  const [borrowPerSecondRate, setBorrowPerSecondRate] = useState(
-    (4.166 / 10 ** 8).toFixed(11)
-  );
-
-  useEffect(() => {
-    setBorrowedRatio(totalAssetBorrowed / totalAssetInThePool);
-  }, [totalAssetInThePool, totalAssetBorrowed]);
-
+export default function GlobalContext({
+  totalAssetInThePool,
+  setTotalAssetInThePool,
+  totalAssetBorrowed,
+  setTotalAssetBorrowed,
+  borrowedRatio,
+  borrowBaseRate,
+  setBorrowBaseRate,
+  borrowPerSecondRate,
+  setBorrowPerSecondRate,
+  executionBaseFee,
+  setExecutionBaseFee,
+}) {
   return (
     <>
       <div className={styles.card}>
@@ -69,6 +68,15 @@ export default function GlobalContext() {
           label="edit borrowBaseRate:"
           value={borrowPerSecondRate}
           setValue={setBorrowPerSecondRate}
+        />
+        <br />
+        <p className={inter.className}>
+          Execution Base Fee : {executionBaseFee}
+        </p>
+        <Edit
+          label="edit executionFee:"
+          value={executionBaseFee}
+          setValue={setExecutionBaseFee}
         />
       </div>
     </>
