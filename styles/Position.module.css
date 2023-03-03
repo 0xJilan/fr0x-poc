@@ -15,3 +15,12 @@
   margin-top: 2rem;
   box-shadow: 5px 5px 15px -6px #000000;
 }
+.dexContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 2rem;
+  width: 100%;
+  height: auto;
+  justify-content: space-around;
+  align-items: center;
+}

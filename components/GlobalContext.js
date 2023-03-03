@@ -22,8 +22,10 @@ export default function GlobalContext({
   totalAssetBorrowed,
   setTotalAssetBorrowed,
   borrowedRatio,
-  borrowBaseRate,
-  setBorrowBaseRate,
+  borrowBaseFee,
+  setBorrowBaseFee,
+  borrowFixed,
+  setBorrowFixed,
   borrowPerSecondRate,
   setBorrowPerSecondRate,
   executionBaseFee,
@@ -53,11 +55,20 @@ export default function GlobalContext({
 
         <p className={inter.className}>Borrowed Ratio : {borrowedRatio}</p>
         <br />
-        <p className={inter.className}>Borrow Base Rate: {borrowBaseRate}</p>
+
+        <p className={inter.className}>Borrow Fixed: {borrowFixed}</p>
         <Edit
-          label="edit borrowBaseRate:"
-          value={borrowBaseRate}
-          setValue={setBorrowBaseRate}
+          label="edit borrowFixed:"
+          value={borrowFixed}
+          setValue={setBorrowFixed}
+        />
+        <br />
+
+        <p className={inter.className}>Borrow Base Fee: {borrowBaseFee}</p>
+        <Edit
+          label="edit borrowBaseFee:"
+          value={borrowBaseFee}
+          setValue={setBorrowBaseFee}
         />
         <br />
 

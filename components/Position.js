@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import {
   getPositionValue,
   getMaxProfit,
+  getBorrowBaseRate,
   getMarginFee,
   getExecutionFee,
 } from "@/lib/Position";
@@ -10,11 +11,18 @@ import styles from "@/styles/Position.module.css";
 import Switch from "./Switch";
 import TimeBox from "./TimeBox";
 import Price from "./Price";
+import GmxPosition from "./GmxPosition";
+import FroxPosition from "./FroxPosition";
+import NewFroxFeeModel from "./NewFroxFeeModel";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Position({
   borrowedRatio,
   borrowBaseRate,
+  borrowBaseFee,
+  borrowFixed,
+  setBorrowBaseRate,
   borrowPerSecondRate,
   executionBaseFee,
 }) {
@@ -48,7 +56,7 @@ export default function Position({
       Number(collateral)
     );
     setMaxProfit(newProfit);
-  }, [positionValue]);
+  }, [positionValue, takeProfitPrice, entryPrice, stopLossPrice]);
 
   useEffect(() => {
     const newMarginFee = getMarginFee(
@@ -56,7 +64,7 @@ export default function Position({
       Number(borrowedRatio),
       Number(borrowBaseRate),
       Number(borrowPerSecondRate),
-      Number(maxProfit)
+      Number(positionValue)
     );
     setMarginFee(newMarginFee);
   }, [
@@ -64,7 +72,7 @@ export default function Position({
     borrowedRatio,
     borrowBaseRate,
     borrowPerSecondRate,
-    maxProfit,
+    positionValue,
   ]);
 
   useEffect(() => {
@@ -75,6 +83,14 @@ export default function Position({
     setExecutionFee(newMarginFee);
   }, [executionBaseFee, maxProfit]);
 
+  useEffect(() => {
+    const newBorrowBaseRate = getBorrowBaseRate(
+      Number(borrowFixed),
+      Number(expiration),
+      Number(borrowBaseFee)
+    );
+    setBorrowBaseRate(newBorrowBaseRate);
+  }, [borrowFixed, expiration, borrowBaseFee]);
   return (
     <>
       <section className={styles.section}>
@@ -98,10 +114,28 @@ export default function Position({
             value={collateral}
             setValue={setCollateral}
           />
-          <p className={inter.className}>Position Value :{positionValue} $</p>
-          <p className={inter.className}>Max Profit :{maxProfit}</p>
-          <p className={inter.className}>Margin Fee :{marginFee}</p>
-          <p className={inter.className}>Execution Fee :{executionFee}</p>
+        </div>
+        <div className={styles.dexContainer}>
+          <GmxPosition
+            borrowedRatio={borrowedRatio}
+            expiration={expiration}
+            positionValue={positionValue}
+            collateral={collateral}
+          />
+          <FroxPosition
+            collateral={collateral}
+            positionValue={positionValue}
+            maxProfit={maxProfit}
+            marginFee={marginFee}
+            executionFee={executionFee}
+          />
+          <NewFroxFeeModel
+            expiration={expiration}
+            collateral={collateral}
+            positionValue={positionValue}
+            maxProfit={maxProfit}
+            borrowedRatio={borrowedRatio}
+          />
         </div>
       </section>
     </>
