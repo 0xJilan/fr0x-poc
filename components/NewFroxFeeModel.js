@@ -15,6 +15,7 @@ export default function NewFroxFeeModel({
       <div className={styles.card}>
         <h2 className={inter.className}>New Fr0x Fee Model</h2>
         <h6 className={inter.className}>Swap fee not included.</h6>
+        <br />
         <p className={inter.className}>
           Collateral: {Number(collateral).toFixed(2)}$
         </p>

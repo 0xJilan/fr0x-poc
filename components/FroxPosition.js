@@ -15,6 +15,8 @@ export default function FroxPosition({
       <div className={styles.card}>
         <h2 className={inter.className}>Fr0x</h2>
         <h6 className={inter.className}>Swap fee not included.</h6>
+        <br />
+
         <p className={inter.className}>
           Collateral: {Number(collateral).toFixed(2)}$
         </p>

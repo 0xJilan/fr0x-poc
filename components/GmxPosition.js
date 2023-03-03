@@ -19,6 +19,7 @@ export default function GmxPosition({
       <div className={styles.card}>
         <h2 className={inter.className}>GMX</h2>
         <h6 className={inter.className}>Swap fee not included.</h6>
+        <br />
         <p className={inter.className}>
           Collateral:
           {Number(getGMXCollateral(positionValue, collateral)).toFixed(2)}$
@@ -26,7 +27,6 @@ export default function GmxPosition({
         <p className={inter.className}>
           Position Value: {Number(positionValue).toFixed(2)}$
         </p>
-
         <p className={inter.className}>
           Leverage: x
           {Number(getGMXLeverage(positionValue, collateral)).toFixed(2)}
