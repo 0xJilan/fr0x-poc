@@ -14,7 +14,7 @@ import DexPosition from "./DexPosition";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Position({ borrowedRatio }) {
-  const [page, setPage] = useState("CREATE");
+  const [page, setPage] = useState("RANDOMIZE");
   const [isLong, setIsLong] = useState(true);
   const [expiration, setExpiration] = useState(0);
   const [entryPrice, setEntryPrice] = useState(1000);
@@ -115,7 +115,9 @@ export default function Position({ borrowedRatio }) {
 
         {page === "RANDOMIZE" && (
           <>
-            <button onClick={handleClick}>Randomize!</button>
+            <button onClick={handleClick} className={styles.buttonDesign}>
+              Randomize!
+            </button>
 
             <div className={styles.dexContainer}>
               {randomizedTrade && (
