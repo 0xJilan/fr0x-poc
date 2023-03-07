@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import { toUSD } from "@/lib/Trade";
 import styles from "@/styles/GlobalContext.module.css";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,20 +23,12 @@ export default function GlobalContext({
   totalAssetBorrowed,
   setTotalAssetBorrowed,
   borrowedRatio,
-  borrowBaseFee,
-  setBorrowBaseFee,
-  borrowFixed,
-  setBorrowFixed,
-  borrowPerSecondRate,
-  setBorrowPerSecondRate,
-  executionBaseFee,
-  setExecutionBaseFee,
 }) {
   return (
     <>
       <div className={styles.card}>
         <p className={inter.className}>
-          Total Asset In Pool : {totalAssetInThePool}$
+          Total Asset In Pool : {toUSD(totalAssetInThePool)}
         </p>
         <Edit
           label="edit totalAssetInThePool:"
@@ -44,7 +37,7 @@ export default function GlobalContext({
         />
         <br />
         <p className={inter.className}>
-          Total Asset Borrowed: {totalAssetBorrowed}$
+          Total Asset Borrowed: {toUSD(totalAssetBorrowed)}
         </p>
         <Edit
           label="edit totalAssetBorrowed:"
@@ -55,40 +48,6 @@ export default function GlobalContext({
 
         <p className={inter.className}>Borrowed Ratio : {borrowedRatio}</p>
         <br />
-
-        <p className={inter.className}>Borrow Fixed: {borrowFixed}</p>
-        <Edit
-          label="edit borrowFixed:"
-          value={borrowFixed}
-          setValue={setBorrowFixed}
-        />
-        <br />
-
-        <p className={inter.className}>Borrow Base Fee: {borrowBaseFee}</p>
-        <Edit
-          label="edit borrowBaseFee:"
-          value={borrowBaseFee}
-          setValue={setBorrowBaseFee}
-        />
-        <br />
-
-        <p className={inter.className}>
-          Borrow Per Seconds Rate : {borrowPerSecondRate}
-        </p>
-        <Edit
-          label="edit borrowBaseRate:"
-          value={borrowPerSecondRate}
-          setValue={setBorrowPerSecondRate}
-        />
-        <br />
-        <p className={inter.className}>
-          Execution Base Fee : {executionBaseFee}
-        </p>
-        <Edit
-          label="edit executionFee:"
-          value={executionBaseFee}
-          setValue={setExecutionBaseFee}
-        />
       </div>
     </>
   );

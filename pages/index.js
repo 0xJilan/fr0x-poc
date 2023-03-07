@@ -4,8 +4,8 @@ import styles from "@/styles/Home.module.css";
 import GlobalContext from "@/components/GlobalContext";
 import Simulation from "@/components/Simulation";
 import Position from "@/components/Position";
-
 import { useState, useEffect } from "react";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -13,13 +13,6 @@ export default function Home() {
   const [totalAssetInThePool, setTotalAssetInThePool] = useState(1000000);
   const [totalAssetBorrowed, setTotalAssetBorrowed] = useState(730000);
   const [borrowedRatio, setBorrowedRatio] = useState(0);
-  const [borrowFixed, setBorrowFixed] = useState(0.005);
-  const [borrowBaseFee, setBorrowBaseFee] = useState(0.00001);
-  const [borrowBaseRate, setBorrowBaseRate] = useState(0.015);
-  const [borrowPerSecondRate, setBorrowPerSecondRate] = useState(
-    (1 / 10 ** 8).toFixed(8)
-  );
-  const [executionBaseFee, setExecutionBaseFee] = useState(0.001);
 
   useEffect(() => {
     setBorrowedRatio(totalAssetBorrowed / totalAssetInThePool);
@@ -39,15 +32,6 @@ export default function Home() {
         totalAssetBorrowed={totalAssetBorrowed}
         setTotalAssetBorrowed={setTotalAssetBorrowed}
         borrowedRatio={borrowedRatio}
-        setBorrowedRatio={setBorrowedRatio}
-        borrowFixed={borrowFixed}
-        setBorrowFixed={setBorrowFixed}
-        borrowBaseFee={borrowBaseFee}
-        setBorrowBaseFee={setBorrowBaseFee}
-        borrowPerSecondRate={borrowPerSecondRate}
-        setBorrowPerSecondRate={setBorrowPerSecondRate}
-        executionBaseFee={executionBaseFee}
-        setExecutionBaseFee={setExecutionBaseFee}
       />
       <main className={styles.main}>
         <h1 className={inter.className}>Fr0x Proof Of Concept</h1>
@@ -67,15 +51,7 @@ export default function Home() {
         </div>
         {page === "POSITION" && (
           <>
-            <Position
-              borrowedRatio={borrowedRatio}
-              borrowBaseFee={borrowBaseFee}
-              borrowFixed={borrowFixed}
-              setBorrowBaseRate={setBorrowBaseRate}
-              borrowBaseRate={borrowBaseRate}
-              borrowPerSecondRate={borrowPerSecondRate}
-              executionBaseFee={executionBaseFee}
-            />
+            <Position borrowedRatio={borrowedRatio} />
           </>
         )}
         {page === "SIMULATION" && <Simulation />}
