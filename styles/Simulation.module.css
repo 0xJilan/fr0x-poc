@@ -60,3 +60,12 @@
   box-shadow: none;
   transform: translateY(0);
 }
+
+.outputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+}

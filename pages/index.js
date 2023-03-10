@@ -54,7 +54,7 @@ export default function Home() {
             <Position borrowedRatio={borrowedRatio} />
           </>
         )}
-        {page === "SIMULATION" && <Simulation />}
+        {page === "SIMULATION" && <Simulation borrowedRatio={borrowedRatio} />}
       </main>
     </>
   );
