@@ -11,10 +11,18 @@ export default function Simulation({ borrowedRatio }) {
   const [shareBorrowRate, setShareBorrowRate] = useState(0);
   const [amountInPool, setAmountInPool] = useState(30000);
   const [simulationOutput, setSimulationOutput] = useState(null);
+  const [maxBetSize, setMaxBetSize] = useState(0.1);
 
   const handleClick = () => {
     setSimulationOutput(
-      getSimulation(runs, amountInPool, borrowedRatio, winRate, shareBorrowRate)
+      getSimulation(
+        runs,
+        amountInPool,
+        borrowedRatio,
+        winRate,
+        shareBorrowRate,
+        maxBetSize
+      )
     );
   };
 
@@ -62,6 +70,22 @@ export default function Simulation({ borrowedRatio }) {
             />
             <label htmlFor="winRate">
               Share of Borrow Fee keep by Pool: {shareBorrowRate}
+            </label>
+          </div>
+
+          <div className={styles.inputWrapper}>
+            <input
+              type="range"
+              id="maxBetSize"
+              name="maxBetSize"
+              min={0.01}
+              max={1}
+              step={0.01}
+              defaultValue={maxBetSize}
+              onChange={(e) => setMaxBetSize(Number(e.target.value))}
+            />
+            <label htmlFor="winRate">
+              Max Bet size in % of Pool capacity : {maxBetSize * 100}%
             </label>
           </div>
 
@@ -116,12 +140,12 @@ export default function Simulation({ borrowedRatio }) {
                 Executed trades: {simulationOutput.executedTrades}
               </p>
               <p className={inter.className}>
-                Executed Trades %:
-                {Number(simulationOutput.executedTradesPercent).toFixed(2)}
+                Executed Trades:
+                {Number(simulationOutput.executedTradesPercent).toFixed(2)}%
               </p>
               <p className={inter.className}>
-                Final Trader winning rate %:
-                {Number(simulationOutput.trueWinningRate).toFixed(2)}
+                Final Trader winning rate:
+                {Number(simulationOutput.trueWinningRate).toFixed(2)}%
               </p>
             </div>
           )}
