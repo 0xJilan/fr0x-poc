@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Simulation({ borrowedRatio }) {
   const [runs, setRuns] = useState(10);
   const [winRate, setWinRate] = useState(0.5);
-  const [shareBorrowRate, setShareBorrowRate] = useState(0);
+  const [shareBorrowRate, setShareBorrowRate] = useState(0.1);
   const [amountInPool, setAmountInPool] = useState(30000);
   const [simulationOutput, setSimulationOutput] = useState(null);
-  const [maxBetSize, setMaxBetSize] = useState(0.1);
+  const [maxBetSize, setMaxBetSize] = useState(0.5);
 
   const handleClick = () => {
     setSimulationOutput(
@@ -37,7 +37,8 @@ export default function Simulation({ borrowedRatio }) {
               id="runs"
               name="runs"
               min="10"
-              max="10000"
+              max="8000"
+              step="100"
               defaultValue={runs}
               onChange={(e) => setRuns(Number(e.target.value))}
             />
@@ -54,7 +55,7 @@ export default function Simulation({ borrowedRatio }) {
               defaultValue={winRate}
               onChange={(e) => setWinRate(Number(e.target.value))}
             />
-            <label htmlFor="winRate">Traders win rate: {winRate}</label>
+            <label htmlFor="winRate">Traders win rate: {winRate * 100}%</label>
           </div>
 
           <div className={styles.inputWrapper}>
@@ -63,13 +64,13 @@ export default function Simulation({ borrowedRatio }) {
               id="shareBorrowRate"
               name="shareBorrowRate"
               min={0}
-              max={1}
+              max={0.2}
               step={0.01}
               defaultValue={shareBorrowRate}
               onChange={(e) => setShareBorrowRate(Number(e.target.value))}
             />
             <label htmlFor="winRate">
-              Share of Borrow Fee keep by Pool: {shareBorrowRate}
+              Borrow Fees keep by Pool: {shareBorrowRate * 100}%
             </label>
           </div>
 
